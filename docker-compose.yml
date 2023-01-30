@@ -1,0 +1,35 @@
+version: "3.9"
+
+services:
+  app-node:
+    container_name: app-node
+    build: 
+      context: ./my_app
+      target: dev
+    ports:
+      - 8080:3000
+    volumes:
+      - ./my_app:/app
+      - /app/node_modules
+      # - ./my_app/node_modules:/app/node_modules
+    environment:
+      - DB_HOST=mongodb
+      - NODE_ENV=development
+      # - DEBUG=my_app:*
+    networks:
+      - example-net
+    # command: nodemon index.js
+    command: npm run start:dev
+  mongodb:
+    container_name: mongodb
+    image: mongo:6.0.4
+    ports:
+      - 7017:27017
+    volumes:
+      - ./db:/data/db
+    networks:
+      - example-net
+    command: mongod --quiet --logpath /dev/null
+
+networks:
+  example-net:
