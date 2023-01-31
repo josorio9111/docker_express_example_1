@@ -16,7 +16,7 @@ exports.create = (req, res) => {
   example
     .save(example)
     .then((data) => {
-      res.json(data);
+      res.status(201).json(data);
     })
     .catch((err) => {
       res.status(500).json({
@@ -28,7 +28,7 @@ exports.create = (req, res) => {
 
 exports.findAll = (req, res) => {
   const title = req.query.title; // api/examples?title=q
-  console.log(title);
+  // console.log(title);
   var condition = title
     ? { title: { $regex: new RegExp(title), $options: "i" } }
     : {};
@@ -68,7 +68,7 @@ exports.findOne = (req, res) => {
     })
     .catch((err) => {
       res.status(500).json({
-        message: "Error retrieving Example with id=" + id 
+        message: "Error retrieving Example with id=" + id,
       });
     });
 };
@@ -127,7 +127,7 @@ exports.delete = (req, res) => {
         });
       } else res.json({ message: "Example was delete successfully." });
     })
-  .catch((err) => {
+    .catch((err) => {
       res.status(500).json({
         message: "Could not delete Example with id=" + id,
       });

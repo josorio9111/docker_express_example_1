@@ -3,7 +3,7 @@ const dbConfig = require('../config/db.config.js');
 
 mongoose.set('strictQuery', true);
 
-// mongoose.Promise = global.Promise;
+mongoose.Promise = global.Promise;
 const db = {};
 
 db.url = dbConfig.url;
