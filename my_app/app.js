@@ -2,11 +2,9 @@ const createError = require("http-errors");
 const express = require("express");
 const colors = require("colors");
 const cookieParser = require("cookie-parser");
-const logger = require("morgan");  // HTTP request logger middleware
+const logger = require("morgan"); // HTTP request logger middleware
 // const cors = require('cors');
 require("dotenv").config();
-
-
 
 const index = require("./routers/index.router");
 
@@ -37,7 +35,7 @@ db.mongoose
     console.log("Connected to the database!".cyan);
   })
   .catch((err) => {
-    console.log("Cannot connect to the database!\n", err);
+    console.log("Cannot connect to the database!", err);
     process.exit();
   });
 
@@ -56,8 +54,9 @@ app.use(function (err, req, res, next) {
   res.locals.message = err.message;
   res.locals.error = req.app.get("env") === "development" ? err : {};
 
-  res.status(err.status || 500);
-  res.json({ error: err.status || 500, url: req.url });
+  res
+    .status(err.status || 500)
+    .json({ error: err.status || 500, url: req.url });
 });
 
 const port = process.env.PORT || 3001;
