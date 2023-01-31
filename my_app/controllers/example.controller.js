@@ -1,4 +1,5 @@
 const db = require("../models");
+// const {request, response} = require('express');
 const Example = db.example;
 
 exports.create = (req, res) => {
@@ -111,7 +112,7 @@ exports.update = (req, res) => {
     });
 };
 
-exports.delete = (req, res) => {
+exports.destroy = (req, res) => {
   if (!req.body) {
     return res.status(400).json({
       message: "Data to delete can not be empty!",

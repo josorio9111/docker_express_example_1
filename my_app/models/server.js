@@ -29,11 +29,11 @@ class Server {
     this.app.use(cors());
     // HTTP Interceptor
     this.app.use(logger("tiny"));
-    // Appalication/json
+    // Parser body to json
     this.app.use(express.json());
     // Peticiones con URlEncoded
     this.app.use(express.urlencoded({ extended: true }));
-    //Cookie
+    // Cookie
     this.app.use(cookieParser());
     // Directorio publico
     this.app.use(express.static("public"));
@@ -73,9 +73,8 @@ class Server {
       res.locals.message = err.message;
       res.locals.error = req.app.get("env") === "development" ? err : {};
 
-      res
-        .status(err.status || 500)
-        .json({ error: err.status || 500, url: req.url });
+      res.status(err.status || 500);
+      res.json({ error: err.status || 500, url: req.url });
     });
   }
 
