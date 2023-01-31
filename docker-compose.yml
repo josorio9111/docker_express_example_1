@@ -3,11 +3,13 @@ version: "3.9"
 services:
   app-node:
     container_name: app-node
+    env_file:
+      - ./.env
     build: 
       context: ./my_app
       target: dev
     ports:
-      - 8080:3000
+      - 8080:$PORT
     volumes:
       - ./my_app:/app
       - /app/node_modules
@@ -23,8 +25,10 @@ services:
   mongodb:
     container_name: mongodb
     image: mongo:6.0.4
+    env_file:
+      - ./.env
     ports:
-      - 7017:27017
+      - 7017:$DB_PORT
     volumes:
       - ./db:/data/db
     networks:

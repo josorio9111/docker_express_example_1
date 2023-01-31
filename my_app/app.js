@@ -1,22 +1,49 @@
 const createError = require("http-errors");
 const express = require("express");
 const colors = require("colors");
-// const cookieParser = require("cookie-parser");
-const logger = require("morgan");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");  // HTTP request logger middleware
+// const cors = require('cors');
+require("dotenv").config();
 
-const index = require("./rutas/index");
-const peticion = require("./rutas/peticiones");
+
+
+const index = require("./routers/index");
 
 const app = express();
 colors.enable();
 
+// var corsOptions = {
+//   origin: "http://localhost:8081"
+// };
+
+// app.use(cors(corsOptions));
+
 app.use(logger("tiny"));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-// app.use(cookieParser());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
+const db = require("./models");
+
+console.log(`${db.url}`.bgBlue);
+
+db.mongoose
+  .connect(db.url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("Connected to the database!".cyan);
+  })
+  .catch((err) => {
+    console.log("Cannot connect to the database!\n", err);
+    process.exit();
+  });
+  
+// Routers
 app.get("/", index);
-app.get("/p", peticion);
+require("./routers/example.router")(app);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -30,10 +57,10 @@ app.use(function (err, req, res, next) {
   res.locals.error = req.app.get("env") === "development" ? err : {};
 
   res.status(err.status || 500);
-  res.json({ error: err.status || 500 , url: req.url});
+  res.json({ error: err.status || 500, url: req.url });
 });
-const port = 3000;
 
+const port = process.env.PORT || 3001;
 app.listen(port, () => {
   // console.log(`Example app listening on port ${port}`.rainbow);
   console.log(

@@ -1,2 +1,4 @@
 my_app/node_modules/
+.env
 db/
+nginx_docker/
