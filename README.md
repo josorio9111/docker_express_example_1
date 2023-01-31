@@ -1,5 +1,5 @@
  <a href="https://nodejs.org/">  
-    <img src="https://img.shields.io/badge/Platform-Node_Compose-green.svg"  
+    <img src="https://img.shields.io/badge/platform-Node_Compose-green.svg"  
       alt="Platform" />  
   </a> 
     <a href="https://github.com/josorio9111/docker_express_example_1/issues">  
@@ -10,10 +10,13 @@
     <img src="https://img.shields.io/github/forks/josorio9111/docker_express_example_1"  
       alt="Forks" />  
   </a> 
-   <a href="https://github.com/josorio9111/docker_express_example_1/stargazers">  
+  <a href="https://github.com/josorio9111/docker_express_example_1/stargazers">  
     <img src="https://img.shields.io/github/stars/josorio9111/docker_express_example_1"  
       alt="Stars" />  
   </a>
+  <img src="https://img.shields.io/github/last-commit/josorio9111/docker_express_example_1" alt="Last commit" />  
+  <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/josorio9111/docker_express_example_1">
+  
 
 # Docker Express Example
 [Docker_express_example](https://img.shields.io/github/stars/josorio9111/docker_express_example_1) es un proyecto de docker-composer con node y  express.
