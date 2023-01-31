@@ -8,7 +8,7 @@ require("dotenv").config();
 
 
 
-const index = require("./routers/index");
+const index = require("./routers/index.router");
 
 const app = express();
 colors.enable();
@@ -40,7 +40,7 @@ db.mongoose
     console.log("Cannot connect to the database!\n", err);
     process.exit();
   });
-  
+
 // Routers
 app.get("/", index);
 require("./routers/example.router")(app);
