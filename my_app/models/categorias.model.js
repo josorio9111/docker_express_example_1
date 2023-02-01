@@ -1,9 +1,11 @@
 module.exports = (mongoose) => {
   const schema = mongoose.Schema(
     {
-      title: String,
-      description: String,
-      published: Boolean,
+      nombre: {
+        type: String,
+        required: [true, "El nombre de la categoria es obligatio"],
+      },
+      usuario: String,
     },
     { timestamps: true }
   );
@@ -14,6 +16,5 @@ module.exports = (mongoose) => {
     return object;
   });
 
-  const Example = mongoose.model("example", schema);
-  return Example;
+  return mongoose.model("categorias", schema);
 };

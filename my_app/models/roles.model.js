@@ -1,11 +1,13 @@
 module.exports = (mongoose) => {
   const schema = mongoose.Schema(
     {
-      title: String,
-      description: String,
-      published: Boolean,
+      nombre: {
+        type: String,
+        required: [true, "El rol es obligatorio"],
+        unique: true,
+      },
     },
-    { timestamps: true }
+    { timestamps: false }
   );
 
   schema.method("toJSON", function () {
@@ -14,6 +16,5 @@ module.exports = (mongoose) => {
     return object;
   });
 
-  const Example = mongoose.model("example", schema);
-  return Example;
+  return mongoose.model("roles", schema);
 };

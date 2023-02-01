@@ -1,4 +1,4 @@
-const db = require("../models");
+const db = require("./app.comtroller");
 // const {request, response} = require('express');
 const Example = db.example;
 
@@ -29,8 +29,7 @@ exports.create = (req, res) => {
 
 exports.findAll = (req, res) => {
   const title = req.query.title; // api/examples?title=q
-  // console.log(title);
-  var condition = title
+  const condition = title
     ? { title: { $regex: new RegExp(title), $options: "i" } }
     : {};
   Example.find(condition)
