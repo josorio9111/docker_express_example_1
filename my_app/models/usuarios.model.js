@@ -18,6 +18,7 @@ module.exports = (mongoose) => {
       role: {
         type: String,
         required: [true, "El rol es obligatorio"],
+        default: "USER_ROLE",
         enum: ["ADMIN_ROLE", "USER_ROLE"],
       },
       google: {

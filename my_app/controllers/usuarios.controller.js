@@ -1,8 +1,8 @@
 const { response, request } = require("express");
 const bcrypt = require("bcryptjs");
-const app = require("../models");
+const models = require("../models");
 
-const Usuarios = app.usuarios;
+const Usuarios = models.usuarios;
 
 exports.create = async (req = request, res = response) => {
   const { nombre, email, password, role } = req.body;

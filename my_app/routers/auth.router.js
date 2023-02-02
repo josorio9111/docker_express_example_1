@@ -7,7 +7,7 @@ router.post(
   "/login",
   [
     check("email", "No es un email válido").isEmail(),
-    check("password","El password es obligatorio").notEmpty(),
+    check("password", "El password es obligatorio").notEmpty(),
     check("password", "El password debe tener 6 letras").isLength({
       min: 6,
     }),
@@ -15,6 +15,12 @@ router.post(
     validarCampos,
   ],
   authController.login
+);
+
+router.post(
+  "/google",
+  [check("id_token", "El id_token es obligatorio").notEmpty(), validarCampos],
+  authController.googleSign
 );
 
 module.exports = router;

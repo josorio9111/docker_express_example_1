@@ -1,9 +1,10 @@
 const { response, request } = require("express");
 const bcryptjs = require("bcryptjs");
-const app = require("../models/index.js");
+const models = require("../models");
 const { generarJWT } = require("../helpers/jwt.js");
+const { googleVerify } = require("../helpers/google-verify");
 
-const Usuarios = app.usuarios;
+const Usuarios = models.usuarios;
 
 exports.login = async (req = request, res = response) => {
   const { email, password } = req.body;
@@ -11,7 +12,9 @@ exports.login = async (req = request, res = response) => {
     // Verificar si existe el correo
     const usuario = await Usuarios.findOne({ email });
     if (!usuario) {
-      res.status(400).json({ message: "El usuario/password no son correctos--correo" });
+      res
+        .status(400)
+        .json({ message: "El usuario/password no son correctos--correo" });
       return;
     }
 
@@ -24,7 +27,9 @@ exports.login = async (req = request, res = response) => {
     // Verificar la password
     const verificar = bcryptjs.compareSync(password, usuario.password);
     if (!verificar) {
-      res.status(400).json({ message: "El usuario/password no son correctos--password" });
+      res
+        .status(400)
+        .json({ message: "El usuario/password no son correctos--password" });
       return;
     }
 
@@ -35,5 +40,34 @@ exports.login = async (req = request, res = response) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Ha ocurrido un error" });
+  }
+};
+
+exports.googleSign = async (req, res = response) => {
+  const { id_token } = req.body;
+  try {
+    const { nombre, email, img } = await googleVerify(id_token);
+    // console.log(payload);
+    let usuario = await Usuarios.findOne({ email });
+    if (!usuario) {
+      usuario = new Usuarios({
+        nombre,
+        email,
+        password: ":P)",
+        img,
+        google: true,
+      });
+      usuario.save();
+    }
+    //Verificar el estado del usuario
+    if (!usuario.estado) {
+      return res.status(400).json({ message: "El usuario no esta activo" });
+    }
+    // Generar el JWT
+    const token = await generarJWT(usuario.id);
+
+    res.json({ usuario, token });
+  } catch (error) {
+    res.status(400).json({ message: "Token no es reconozido" });
   }
 };

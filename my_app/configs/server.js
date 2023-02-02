@@ -9,9 +9,7 @@ class Server {
   constructor() {
     this.app = express();
     this.port = process.env.PORT;
-    this.examplesPath = "/api/examples";
     this.authPath = "/api/auth";
-    this.examplePath = "/api/examples";
     this.usuarioPath = "/api/usuarios";
 
     //Database
@@ -43,12 +41,8 @@ class Server {
   }
 
   routers() {
-    // api/examples
-    this.app.use(this.examplesPath, require('../routers/example.router'));
     // api/auth
     this.app.use(this.authPath, require("../routers/auth.router"));
-    //  api/examples
-    this.app.use(this.examplePath, require("../routers/example.router"));
     //  api/usuarios
     this.app.use(this.usuarioPath, require("../routers/usuarios.router"));
   }

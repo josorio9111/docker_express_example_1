@@ -1,5 +1,5 @@
 const models = require("../models");
-const Usuarios = app.usuarios;
+const Usuarios = models.usuarios;
 
 const esRoleValido = async (role = "") => {
   const Role = models.roles;
