@@ -1,6 +1,6 @@
-const db = require("./app.comtroller");
+const app = require("../models");
 // const {request, response} = require('express');
-const Example = db.example;
+const Example = app.example;
 
 exports.create = (req, res) => {
   if (!req.body.title) {

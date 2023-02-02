@@ -1,10 +1,10 @@
-const db = require("../controllers/app.comtroller");
+const app = require("../models");
 
 exports.dbConnectt = async () => {
-  console.log(db.url);
+  console.log(app.url);
 
-  await db.mongoose
-    .connect(db.url, {
+  await app.mongoose
+    .connect(app.url, {
       useNewUrlParser: true,
       useUnifiedTopology: true
     })

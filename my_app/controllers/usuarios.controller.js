@@ -1,8 +1,8 @@
 const { response, request } = require("express");
 const bcrypt = require("bcryptjs");
-const db = require("./app.comtroller");
+const app = require("../models");
 
-const Usuarios = db.usuarios;
+const Usuarios = app.usuarios;
 
 exports.create = async (req = request, res = response) => {
   const { nombre, email, password, role } = req.body;
@@ -83,8 +83,8 @@ exports.destroy = async (req = request, res = response) => {
 
   // findByIdAndDelete
   await Usuarios.findByIdAndUpdate(idParam, { estado: false })
-    .then((data) => {
-      res.status(200).json(data);
+    .then((usuario) => {
+      res.status(200).json(usuario);
     })
     .catch((err) => {
       res.status(500).json({

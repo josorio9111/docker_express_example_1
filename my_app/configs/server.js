@@ -9,6 +9,10 @@ class Server {
   constructor() {
     this.app = express();
     this.port = process.env.PORT;
+    this.examplesPath = "/api/examples";
+    this.authPath = "/api/auth";
+    this.examplePath = "/api/examples";
+    this.usuarioPath = "/api/usuarios";
 
     //Database
     this.database();
@@ -39,10 +43,14 @@ class Server {
   }
 
   routers() {
+    // api/examples
+    this.app.use(this.examplesPath, require('../routers/example.router'));
+    // api/auth
+    this.app.use(this.authPath, require("../routers/auth.router"));
     //  api/examples
-    require("../routers/example.router")(this.app);
+    this.app.use(this.examplePath, require("../routers/example.router"));
     //  api/usuarios
-    require("../routers/usuarios.router")(this.app);
+    this.app.use(this.usuarioPath, require("../routers/usuarios.router"));
   }
 
   async database() {
@@ -67,7 +75,7 @@ class Server {
 
   listen() {
     this.app.listen(this.port, () => {
-      console.log('Example app listening on port: ', this.port);
+      console.log("Example app listening on port: ", this.port);
     });
   }
 }

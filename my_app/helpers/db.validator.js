@@ -1,8 +1,8 @@
-const db = require("../controllers/app.comtroller");
-const Usuarios = db.usuarios;
+const models = require("../models");
+const Usuarios = app.usuarios;
 
 const esRoleValido = async (role = "") => {
-  const Role = db.roles;
+  const Role = models.roles;
   const existeRol = await Role.findOne({ nombre: role });
   if (!existeRol) {
     throw new Error(`El rol no existe: ${role}`);
