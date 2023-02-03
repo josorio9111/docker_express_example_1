@@ -11,7 +11,7 @@ const {
 const {
   esRoleValido,
   emailExiste,
-  idExiste,
+  existeIdUsuario,
 } = require("../helpers/db.validator.js");
 
 // Create a new usuarios
@@ -38,7 +38,7 @@ router.get(
   "/:id",
   [
     check("id", "No es un Id de Mongo").isMongoId(),
-    check("id").custom(idExiste),
+    check("id").custom(existeIdUsuario),
     validarCampos,
   ],
   usuarios.findOne
@@ -49,8 +49,7 @@ router.put(
   "/:id",
   [
     check("id", "No es un Id de Mongo").isMongoId(),
-    check("id").custom(idExiste),
-    check("role").custom(esRoleValido),
+    check("id").custom(existeIdUsuario),
     validarCampos,
   ],
   usuarios.update
@@ -61,10 +60,10 @@ router.delete(
   "/:id",
   [
     validarJWT,
-    // isAdminRole,
-    tieneRole("ADMIN_ROLE", "VENTAS_ROLE"),
+    isAdminRole,
+    // tieneRole("ADMIN_ROLE", "VENTAS_ROLE"),
     check("id", "No es un Id de Mongo").isMongoId(),
-    check("id", "No exite el ID").custom(idExiste),
+    check("id").custom(existeIdUsuario),
     validarCampos,
   ],
   usuarios.destroy

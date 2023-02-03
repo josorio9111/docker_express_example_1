@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 const models = require("../models");
 
 const Usuarios = models.usuarios;
+const Roles = models.roles;
 
 exports.create = async (req = request, res = response) => {
   const { nombre, email, password, role } = req.body;
@@ -11,17 +12,14 @@ exports.create = async (req = request, res = response) => {
   // Encriptar password
   const salt = bcrypt.genSaltSync();
   usuario.password = bcrypt.hashSync(password, salt);
-
-  await usuario
-    .save()
-    .then((data) => {
-      res.status(201).json(data);
-    })
-    .catch((err) => {
-      res.status(500).json({
-        message: err.message,
-      });
+  try {
+    const data = await usuario.save();
+    res.status(201).json(data);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
     });
+  }
 };
 
 exports.findAll = async (req = request, res = response) => {
@@ -46,49 +44,70 @@ exports.findAll = async (req = request, res = response) => {
 
 exports.findOne = async (req = request, res = response) => {
   const id = req.params.id;
-  await Usuarios.findById(id)
-    .then((data) => {
-      res.status(200).json(data);
-    })
-    .catch((err) => {
-      res.status(500).json({
-        message: "Error retrieving Usuario with id=" + id,
-      });
+  try {
+    const usuario = await Usuarios.findById(id);
+    res.status(200).json(usuario);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
     });
+  }
 };
 
 exports.update = async (req = request, res = response) => {
   const idParam = req.params.id;
-  const { password, google, email, ...resto } = req.body;
+  const { password, google, ...data } = req.body;
 
   // Si viene el password lo actulizo y lo encripto
   if (password) {
     const salt = bcrypt.genSaltSync();
-    resto.password = bcrypt.hashSync(password, salt);
+    data.password = bcrypt.hashSync(password, salt);
+  }
+  // Si viene el role lo actulizo o sino lo dejo igual
+  if (data.role) {
+    const existeRol = await Roles.findOne({ role: data.role });
+    if (!existeRol) {
+      return res
+        .status(401)
+        .json({ message: `No existe un rol con ese nombre: ${data.role}` });
+    }
+  }
+  // Si viene un email lo actulizo o sino lo dejo igual
+  if (data.email) {
+    const existeEmail = await Roles.findOne({ email: data.email });
+    if (!existeEmail) {
+      return res
+        .status(401)
+        .json({ message: `No existe un email con ese nombre: ${data.email}` });
+    }
   }
 
-  await Usuarios.findByIdAndUpdate(idParam, resto)
-    .then((data) => {
-      res.status(200).json(data);
-    })
-    .catch((err) => {
-      res.status(500).json({
-        message: err.message,
-      });
+  try {
+    const usuario = await Usuarios.findByIdAndUpdate(idParam, data, {
+      new: true,
     });
+    res.status(200).json(usuario);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
 };
 
 exports.destroy = async (req = request, res = response) => {
   const idParam = req.params.id;
 
   // findByIdAndDelete
-  await Usuarios.findByIdAndUpdate(idParam, { estado: false })
-    .then((usuario) => {
-      res.status(200).json(usuario);
-    })
-    .catch((err) => {
-      res.status(500).json({
-        message: err.message,
-      });
+  try {
+    const usuario = await Usuarios.findByIdAndUpdate(
+      idParam,
+      { estado: false },
+      { new: true } // muestra el nuevo valor del usuario
+    );
+    res.status(200).json(usuario);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
     });
+  }
 };

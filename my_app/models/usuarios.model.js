@@ -39,5 +39,5 @@ module.exports = (mongoose) => {
     return object;
   });
 
-  return mongoose.model("usuarios", schema);
+  return mongoose.model("Usuario", schema);
 };

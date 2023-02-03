@@ -1,3 +1,5 @@
+const { Schema } = require("mongoose");
+
 module.exports = (mongoose) => {
   const schema = mongoose.Schema(
     {
@@ -5,24 +7,41 @@ module.exports = (mongoose) => {
         type: String,
         required: [true, "El nombre es obligatorio"],
       },
-      precioUni: {
+      precio: {
         type: Number,
+        default: 0,
       },
-      categoria: String,
+      categoria: {
+        type: Schema.Types.ObjectId,
+        ref: "Categoria",
+        required: [true, "La categoria es obligatoria"],
+      },
+      estado: {
+        type: Boolean,
+        default: true,
+        require: true,
+      },
+      usuario: {
+        type: Schema.Types.ObjectId,
+        ref: "Usuario",
+        required: [true, "El usuario es obligatorio"],
+      },
+      descripcion: {
+        type: String,
+      },
       disponible: {
         type: Boolean,
         default: true,
       },
-      usuario: String,
     },
     { timestamps: true }
   );
 
   schema.method("toJSON", function () {
-    const { __v, _id, ...object } = this.toObject();
+    const { __v, estado, _id, ...object } = this.toObject();
     object.id = _id;
     return object;
   });
 
-  return mongoose.model("productos", schema);
+  return mongoose.model("Producto", schema);
 };

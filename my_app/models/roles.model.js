@@ -16,5 +16,5 @@ module.exports = (mongoose) => {
     return object;
   });
 
-  return mongoose.model("roles", schema);
+  return mongoose.model("Role", schema);
 };
