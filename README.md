@@ -14,10 +14,10 @@
     <img src="https://img.shields.io/github/stars/josorio9111/docker_express_example_1"  
       alt="Stars" />  
   </a>
-  <a href="https://github.com/josorio9111/docker_express_example_1">
+  <a href="https://github.com/josorio9111/docker_express_example_1/commits">
    <img src="https://img.shields.io/github/last-commit/josorio9111/docker_express_example_1" alt="Last commit" />
   </a>
-  <a href="https://github.com/josorio9111/docker_express_example_1">
+  <a href="https://github.com/josorio9111/docker_express_example_1/search?l=javascript>
    <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/josorio9111/docker_express_example_1">
   </a>
   
