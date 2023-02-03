@@ -10,7 +10,8 @@ class Server {
     this.app = express();
     this.port = process.env.PORT;
     this.path = {
-      authPath: "/api/auth",
+      auth: "/api/auth",
+      buscar: "/api/buscar",
       usuarioPath: "/api/usuarios",
       categoriaPath: "/api/categorias",
       productoPath: "/api/productos",
@@ -46,7 +47,7 @@ class Server {
 
   routers() {
     //  api/auth
-    this.app.use(this.path.authPath, require("../routers/auth.router"));
+    this.app.use(this.path.auth, require("../routers/auth.router"));
     //  api/usuarios
     this.app.use(this.path.usuarioPath, require("../routers/usuarios.router"));
     // api/categorias
@@ -59,6 +60,8 @@ class Server {
       this.path.productoPath,
       require("../routers/productos.router")
     );
+    // api/buscar
+    this.app.use(this.path.buscar, require("../routers/buscar.router"));
   }
 
   async database() {
