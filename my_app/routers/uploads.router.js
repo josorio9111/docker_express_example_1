@@ -14,7 +14,8 @@ router.put(
     validarArchivo,
     validarCampos,
   ],
-  upload.actualizarImagen
+  // upload.actualizarImagen
+  upload.actualizarImagenCloudinary
 );
 
 router.get(

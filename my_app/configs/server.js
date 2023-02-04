@@ -3,8 +3,9 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const createError = require("http-errors");
 const cors = require("cors");
-const { dbConnectt } = require("../database/db.connect");
 const fileUpload = require("express-fileupload");
+const helmet = require("helmet");
+const { dbConnectt } = require("../database/db.connect");
 
 class Server {
   constructor() {
@@ -35,6 +36,8 @@ class Server {
   middlewares() {
     // CORS
     this.app.use(cors());
+    // Helmet
+    this.app.use(helmet());
     // HTTP Interceptor
     this.app.use(logger("tiny"));
     // Parser body to json
@@ -61,15 +64,9 @@ class Server {
     //  api/usuarios
     this.app.use(this.path.usuarioPath, require("../routers/usuarios.router"));
     // api/categorias
-    this.app.use(
-      this.path.categoriaPath,
-      require("../routers/categorias.router")
-    );
+    this.app.use(this.path.categoriaPath, require("../routers/categorias.router"));
     // api/productos
-    this.app.use(
-      this.path.productoPath,
-      require("../routers/productos.router")
-    );
+    this.app.use(this.path.productoPath, require("../routers/productos.router"));
     // api/buscar
     this.app.use(this.path.buscar, require("../routers/buscar.router"));
     // api/uploads
