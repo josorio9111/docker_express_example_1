@@ -16,9 +16,7 @@ exports.create = async (req = request, res = response) => {
     const data = await usuario.save();
     res.status(201).json(data);
   } catch (error) {
-    res.status(500).json({
-      message: error.message,
-    });
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -36,9 +34,7 @@ exports.findAll = async (req = request, res = response) => {
     ]);
     res.status(200).send({ total, usuarios });
   } catch (error) {
-    res.status(500).json({
-      message: error.message,
-    });
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -48,9 +44,7 @@ exports.findOne = async (req = request, res = response) => {
     const usuario = await Usuarios.findById(id);
     res.status(200).json(usuario);
   } catch (error) {
-    res.status(500).json({
-      message: error.message,
-    });
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -67,18 +61,18 @@ exports.update = async (req = request, res = response) => {
   if (data.role) {
     const existeRol = await Roles.findOne({ role: data.role });
     if (!existeRol) {
-      return res
-        .status(401)
-        .json({ message: `No existe un rol con ese nombre: ${data.role}` });
+      return res.status(401).json({
+        message: `No existe un rol con ese nombre: ${data.role}`
+      });
     }
   }
   // Si viene un email lo actulizo o sino lo dejo igual
   if (data.email) {
     const existeEmail = await Roles.findOne({ email: data.email });
     if (!existeEmail) {
-      return res
-        .status(401)
-        .json({ message: `No existe un email con ese nombre: ${data.email}` });
+      return res.status(401).json({
+        message: `No existe un email con ese nombre: ${data.email}`
+      });
     }
   }
 
@@ -88,17 +82,14 @@ exports.update = async (req = request, res = response) => {
     });
     res.status(200).json(usuario);
   } catch (error) {
-    res.status(500).json({
-      message: error.message,
-    });
+    res.status(500).json({ message: error.message });
   }
 };
 
 exports.destroy = async (req = request, res = response) => {
-  const idParam = req.params.id;
-
   // findByIdAndDelete
   try {
+    const idParam = req.params.id;
     const usuario = await Usuarios.findByIdAndUpdate(
       idParam,
       { estado: false },
@@ -106,8 +97,6 @@ exports.destroy = async (req = request, res = response) => {
     );
     res.status(200).json(usuario);
   } catch (error) {
-    res.status(500).json({
-      message: error.message,
-    });
+    res.status(500).json({ message: error.message });
   }
 };

@@ -9,18 +9,16 @@ exports.create = async (req, res = response) => {
   data.nombre = data.nombre.toLowerCase();
   const productoDB = await Productos.findOne({ nombre: data.nombre });
   if (productoDB) {
-    return res
-      .status(400)
-      .json({ message: `La producto ${productoDB.nombre} ya existe` });
+    return res.status(400).json({
+      message: `La producto ${productoDB.nombre} ya existe`
+    });
   }
   try {
     const producto = new Productos(data);
     await producto.save();
     res.status(201).json(producto);
   } catch (error) {
-    res.status(500).json({
-      message: error.message,
-    });
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -56,9 +54,7 @@ exports.findOne = async (req = request, res = response) => {
       .populate("categoria", "nombre");
     res.status(200).json(categoriaDB);
   } catch (error) {
-    res.status(500).json({
-      message: error.message,
-    });
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -88,9 +84,7 @@ exports.update = async (req = request, res = response) => {
       .populate("categoria", "nombre");
     res.status(200).json(producto);
   } catch (error) {
-    res.status(500).json({
-      message: error.message,
-    });
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -106,8 +100,6 @@ exports.destroy = async (req = request, res = response) => {
       .populate("categoria", "nombre");
     res.status(200).json(producto);
   } catch (error) {
-    res.status(500).json({
-      message: error.message,
-    });
+    res.status(500).json({ message: error.message });
   }
 };

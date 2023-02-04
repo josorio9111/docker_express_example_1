@@ -9,9 +9,9 @@ const Productos = models.productos;
 exports.buscar = (req = request, res = response) => {
   const { coleccion, termino } = req.params;
   if (!colePermitidas.includes(coleccion)) {
-    return res
-      .status(400)
-      .json({ message: `Las colecciones permitidas son: ${colePermitidas}` });
+    return res.status(400).json({
+      message: `Las colecciones permitidas son: ${colePermitidas}`
+    });
   }
 
   switch (coleccion) {

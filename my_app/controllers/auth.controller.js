@@ -12,9 +12,9 @@ exports.login = async (req = request, res = response) => {
     // Verificar si existe el correo
     const usuario = await Usuarios.findOne({ email });
     if (!usuario) {
-      return res
-        .status(400)
-        .json({ message: "El usuario/password no son correctos--correo" });
+      return res.status(400).json({
+        message: "El usuario/password no son correctos--correo"
+      });
     }
     // Si el usuario esta activo
     if (!usuario.estado) {
@@ -23,9 +23,9 @@ exports.login = async (req = request, res = response) => {
     // Verificar la password
     const verificar = bcryptjs.compareSync(password, usuario.password);
     if (!verificar) {
-      return res
-        .status(400)
-        .json({ message: "El usuario/password no son correctos--password" });
+      return res.status(400).json({
+        message: "El usuario/password no son correctos--password"
+      });
     }
     // Generar el JWT
     const token = await generarJWT(usuario.id);

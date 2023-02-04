@@ -37,7 +37,7 @@ router.put(
     validarJWT,
     check("id", "No es un Id de Mongo").isMongoId(),
     check("id").custom(existeIdProducto),
-    validarCampos,
+    validarCampos
   ],
   productos.update
 );
@@ -49,7 +49,7 @@ router.delete(
     isAdminRole,
     check("id", "No es un Id de Mongo").isMongoId(),
     check("id").custom(existeIdProducto),
-    validarCampos,
+    validarCampos
   ],
   productos.destroy
 );

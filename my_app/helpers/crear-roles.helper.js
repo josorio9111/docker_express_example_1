@@ -11,7 +11,6 @@ exports.crearRoles = (roles) => {
         if (!data) {
           rol.save();
         }
-      })
-      .catch((error) => {});
+      }).catch((error) => { });
   });
 };

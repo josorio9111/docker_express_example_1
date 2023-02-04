@@ -72,16 +72,13 @@ exports.update = async (req, res = response) => {
   if (data.nombre) {
     data.nombre = data.nombre.toUpperCase();
   }
-
   try {
     const categoria = await Categorias.findByIdAndUpdate(id, data, {
       new: true,
     });
     res.status(200).json(categoria);
   } catch (error) {
-    res.status(500).json({
-      message: error.message,
-    });
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -95,8 +92,6 @@ exports.destroy = async (req, res = response) => {
     );
     res.status(200).json(categoria);
   } catch (error) {
-    res.status(500).json({
-      message: error.message,
-    });
+    res.status(500).json({ message: error.message });
   }
 };

@@ -19,7 +19,10 @@ router.post(
 
 router.post(
   "/google",
-  [check("id_token", "El id_token es obligatorio").notEmpty(), validarCampos],
+  [
+    check("id_token", "El id_token es obligatorio").notEmpty(),
+    validarCampos
+  ],
   authController.googleSign
 );
 

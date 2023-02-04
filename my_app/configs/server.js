@@ -4,6 +4,7 @@ const logger = require("morgan");
 const createError = require("http-errors");
 const cors = require("cors");
 const { dbConnectt } = require("../database/db.connect");
+const fileUpload = require("express-fileupload");
 
 class Server {
   constructor() {
@@ -12,6 +13,7 @@ class Server {
     this.path = {
       auth: "/api/auth",
       buscar: "/api/buscar",
+      uploads: "/api/uploads",
       usuarioPath: "/api/usuarios",
       categoriaPath: "/api/categorias",
       productoPath: "/api/productos",
@@ -43,6 +45,14 @@ class Server {
     this.app.use(cookieParser());
     // Directorio publico
     this.app.use(express.static("public"));
+    // FileUpload - Carga de archivos
+    this.app.use(
+      fileUpload({
+        useTempFiles: true,
+        tempFileDir: "/tmp/",
+        createParentPath: true
+      })
+    );
   }
 
   routers() {
@@ -62,6 +72,8 @@ class Server {
     );
     // api/buscar
     this.app.use(this.path.buscar, require("../routers/buscar.router"));
+    // api/uploads
+    this.app.use(this.path.uploads, require("../routers/uploads.router"));
   }
 
   async database() {

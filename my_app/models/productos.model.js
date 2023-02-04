@@ -33,6 +33,9 @@ module.exports = (mongoose) => {
         type: Boolean,
         default: true,
       },
+      img: {
+        type: String,
+      },
     },
     { timestamps: true }
   );
