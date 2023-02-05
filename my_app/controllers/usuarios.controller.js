@@ -16,6 +16,7 @@ exports.create = async (req = request, res = response) => {
     const data = await usuario.save();
     res.status(201).json(data);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: error.message });
   }
 };
@@ -34,6 +35,7 @@ exports.findAll = async (req = request, res = response) => {
     ]);
     res.status(200).send({ total, usuarios });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: error.message });
   }
 };
@@ -44,6 +46,7 @@ exports.findOne = async (req = request, res = response) => {
     const usuario = await Usuarios.findById(id);
     res.status(200).json(usuario);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: error.message });
   }
 };
@@ -82,6 +85,7 @@ exports.update = async (req = request, res = response) => {
     });
     res.status(200).json(usuario);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: error.message });
   }
 };
@@ -97,6 +101,7 @@ exports.destroy = async (req = request, res = response) => {
     );
     res.status(200).json(usuario);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: error.message });
   }
 };

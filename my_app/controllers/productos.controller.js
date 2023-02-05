@@ -18,6 +18,7 @@ exports.create = async (req, res = response) => {
     await producto.save();
     res.status(201).json(producto);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: error.message });
   }
 };
@@ -28,7 +29,6 @@ exports.findAll = async (req, res = response) => {
     estado: true,
     nombre: { $regex: new RegExp(q), $options: "i" },
   };
-
   try {
     const [total, productos] = await Promise.all([
       Productos.countDocuments({ estado: true }),
@@ -40,9 +40,8 @@ exports.findAll = async (req, res = response) => {
     ]);
     res.status(200).send({ total, productos });
   } catch (error) {
-    res.status(500).json({
-      message: error.message,
-    });
+    console.log(error);
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -54,6 +53,7 @@ exports.findOne = async (req = request, res = response) => {
       .populate("categoria", "nombre");
     res.status(200).json(categoriaDB);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: error.message });
   }
 };
@@ -75,7 +75,6 @@ exports.update = async (req = request, res = response) => {
       });
     }
   }
-
   try {
     const producto = await Productos.findByIdAndUpdate(id, data, {
       new: true,
@@ -84,6 +83,7 @@ exports.update = async (req = request, res = response) => {
       .populate("categoria", "nombre");
     res.status(200).json(producto);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: error.message });
   }
 };
@@ -100,6 +100,7 @@ exports.destroy = async (req = request, res = response) => {
       .populate("categoria", "nombre");
     res.status(200).json(producto);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ message: error.message });
   }
 };

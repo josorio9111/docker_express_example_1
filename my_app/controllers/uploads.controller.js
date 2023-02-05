@@ -13,6 +13,7 @@ exports.cargarArchivos = async (req = request, res = response) => {
     const pathArchivo = await subirArchivo(req.files, ["js"], "javascript");
     res.json({ pathArchivo });
   } catch (error) {
+    console.log(error);
     res.status(400).json({ error });
   }
 };
@@ -50,7 +51,7 @@ exports.actualizarImagen = async (req = request, res = response) => {
     res.status(200).json(modelo);
   } catch (error) {
     console.log(error);
-    res.status(400).json({ error });
+    res.status(400).json({ message: error.message });
   }
 };
 
@@ -88,7 +89,7 @@ exports.actualizarImagenCloudinary = async (req = request, res = response) => {
     res.status(200).json(modelo);
   } catch (error) {
     console.log(error);
-    res.status(400).json({ error });
+    res.status(400).json({ message: error.message });
   }
 };
 
@@ -123,6 +124,6 @@ exports.mostrarImagen = async (req, res = response) => {
     res.status(200).sendFile(pathAsset);
   } catch (error) {
     console.log(error);
-    res.status(400).json({ error });
+    res.status(400).json({ message: error.message });
   }
 }

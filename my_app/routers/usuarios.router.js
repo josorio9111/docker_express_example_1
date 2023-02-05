@@ -2,26 +2,15 @@ const { check } = require("express-validator");
 const router = require("express").Router();
 const usuarios = require("../controllers/usuarios.controller.js");
 
-const {
-  validarCampos,
-  validarJWT,
-  isAdminRole,
-  tieneRole,
-} = require("../middlewares");
-const {
-  esRoleValido,
-  emailExiste,
-  existeIdUsuario,
-} = require("../helpers/db.validator.js");
+const { validarCampos, validarJWT, isAdminRole, tieneRole, } = require("../middlewares");
+const { esRoleValido, emailExiste, existeIdUsuario, } = require("../helpers/db.validator.js");
 
 // Create a new usuarios
 router.post(
   "/",
   [
     check("nombre", "El nombre es obligatorio").notEmpty(),
-    check("password", "El password debe tener 6 letras").isLength({
-      min: 6,
-    }),
+    check("password", "El password debe tener 6 letras").isLength({ min: 6 }),
     check("email", "El correo no es válido").isEmail(),
     check("email").custom(emailExiste),
     check("role").custom(esRoleValido),

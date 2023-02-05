@@ -13,7 +13,6 @@ exports.buscar = (req = request, res = response) => {
       message: `Las colecciones permitidas son: ${colePermitidas}`
     });
   }
-
   switch (coleccion) {
     case "usuarios":
       exiteUsuario(termino, res);

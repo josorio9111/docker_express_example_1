@@ -60,6 +60,7 @@ exports.googleSign = async (req, res = response) => {
     const token = await generarJWT(usuario.id);
     res.json({ usuario, token });
   } catch (error) {
+    console.log(error);
     res.status(400).json({ message: "Token no es reconozido" });
   }
 };

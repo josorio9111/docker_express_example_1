@@ -5,12 +5,12 @@ COPY package*.json .
 
 FROM base as pro
 ENV NODE_ENV=pro
-RUN npm ci
+RUN npm ci --only=production
 COPY . .
-CMD [ "node", "app" ]
+CMD [ "npm", "start" ]
 
 FROM base as dev
 ENV NODE_ENV=dev
 RUN npm install -g nodemon && npm install
 COPY . .
-CMD [ "nodemon", "app" ]
+CMD [ "npm", "start:dev" ]

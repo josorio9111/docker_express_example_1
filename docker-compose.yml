@@ -20,6 +20,8 @@ services:
       - NODE_ENV=dev
     networks:
       - example-net
+    stdin_open: true
+    tty: true
       
   mongodb:
     container_name: mongodb
@@ -38,6 +40,6 @@ services:
 networks:
   example-net:
     driver: bridge
-volumes:
-  app:
+# volumes:
+  # app:
   # db:
