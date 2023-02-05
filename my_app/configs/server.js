@@ -4,7 +4,6 @@ const logger = require("morgan");
 const createError = require("http-errors");
 const cors = require("cors");
 const fileUpload = require("express-fileupload");
-const helmet = require("helmet");
 const { dbConnectt } = require("../database/db.connect");
 
 class Server {
@@ -36,8 +35,6 @@ class Server {
   middlewares() {
     // CORS
     this.app.use(cors());
-    // Helmet
-    this.app.use(helmet());
     // HTTP Interceptor
     this.app.use(logger("tiny"));
     // Parser body to json
