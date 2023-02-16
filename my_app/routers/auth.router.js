@@ -1,7 +1,11 @@
 const router = require("express").Router();
 const { check } = require("express-validator");
 const authController = require("../controllers/auth.controller.js");
-const { validarCampos } = require("../middlewares/validar-campos.js");
+const { validarCampos, validarJWT } = require("../middlewares");
+
+router.get(
+  "/", validarJWT, authController.renovarToken
+);
 
 router.post(
   "/login",

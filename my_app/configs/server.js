@@ -5,11 +5,14 @@ const createError = require("http-errors");
 const cors = require("cors");
 const fileUpload = require("express-fileupload");
 const { dbConnectt } = require("../database/db.connect");
+const { socketControllers } = require("../sockets/controller.socket");
 
 class Server {
   constructor() {
     this.app = express();
     this.port = process.env.PORT;
+    this.server = require('http').createServer(this.app);
+    this.io = require('socket.io')(this.server);
     this.path = {
       auth: "/api/auth",
       buscar: "/api/buscar",
@@ -27,6 +30,9 @@ class Server {
 
     // Rutas
     this.routers();
+
+    //Sockets
+    this.sockets();
 
     // handle Error
     this.handeError();
@@ -74,6 +80,10 @@ class Server {
     await dbConnectt();
   }
 
+  sockets() {
+    this.io.on('connection', client => socketControllers(client, this.io));
+  }
+
   handeError() {
     // catch 404 and forward to error handler
     this.app.use(function (req, res, next) {
@@ -91,7 +101,7 @@ class Server {
   }
 
   listen() {
-    this.app.listen(this.port, () => {
+    this.server.listen(this.port, () => {
       console.log("Example app listening on port: ", this.port);
     });
   }

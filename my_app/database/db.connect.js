@@ -1,7 +1,7 @@
 const models = require("../models");
 
 exports.dbConnectt = async () => {
-  console.log(models.url);
+  // console.log(models.url);
 
   await models.mongoose
     .connect(models.url, {

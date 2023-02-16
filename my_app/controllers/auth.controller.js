@@ -40,7 +40,6 @@ exports.googleSign = async (req, res = response) => {
   const { id_token } = req.body;
   try {
     const { nombre, email, img } = await googleVerify(id_token);
-    // console.log(payload);
     let usuario = await Usuarios.findOne({ email });
     if (!usuario) {
       usuario = new Usuarios({
@@ -64,3 +63,10 @@ exports.googleSign = async (req, res = response) => {
     res.status(400).json({ message: "Token no es reconozido" });
   }
 };
+
+exports.renovarToken = async (req, res) => {
+  const { usuario } = req;
+  // Generar el JWT
+  const token = await generarJWT(usuario.id);
+  res.json({ usuario, token });
+}

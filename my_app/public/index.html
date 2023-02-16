@@ -9,49 +9,31 @@
       content="431475091753-1k8hn5rfprdlicincep82buueqrmmb0h.apps.googleusercontent.com"
     />
     <title>Google Sign</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
   </head>
-  <body>
-    <h1>Google Sign</h1>
-    <hr />
+  <body class="container">
+    <div class="row mt-5">
+      <div class="col-sm-6">
+        <h1>Google Sign</h1>
+        <hr />
+        <div id="buttonDiv"></div>
+        <a href="#" onclick="onSignout()">Logout</a>
+      </div>
+      <div class="col-sm-6">
+        <h1>Authentication</h1>
+        <hr />
+        <form class="d-grid">
+            <input type="email" class="form-control mb-2" name="email" placeholder="Email">
+            <input type="password1" class="form-control mb-2" name="password" placeholder="Password"/>
+          
+          <button type="submit" class="btn btn-primary">Ingresar</button>
+        </form>
+
+      </div>
+    </div>
+
     <script src="https://accounts.google.com/gsi/client" async defer></script>
-    <script>
-      var url = window.location.hostname.includes("localhost")
-        ? "http://localhost:8080/api/auth/google"
-        : "https://" + window.location.hostname + "/api/auth/google";
-
-      function handleCredentialResponse(response) {
-        console.log("Encoded JWT ID token: " + response.credential);
-        const data = { id_token: response.credential };
-        // console.log(data);
-        fetch(url, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
-        })
-          .then((resp) => resp.json())
-          .then((data) => console.log("Nuestro server", data))
-          .catch(console.log);
-      }
-      window.onload = function () {
-        google.accounts.id.initialize({
-          client_id:
-            "431475091753-1k8hn5rfprdlicincep82buueqrmmb0h.apps.googleusercontent.com",
-          callback: handleCredentialResponse,
-        });
-        google.accounts.id.renderButton(
-          document.getElementById("buttonDiv"),
-          { theme: "outline", size: "large" } // customization attributes
-        );
-
-        // google.accounts.id.prompt(); // also display the One Tap dialog
-      };
-
-      function onSignout() {
-        console.log("logout");
-        google.accounts.id.disableAutoSelect();
-      }
-    </script>
-    <div id="buttonDiv"></div>
-    <a href="#" onclick="onSignout()">Logout</a>
+    <script src="./js/selector.js"></script>
+    <script src="./js/auth.js"></script>
   </body>
 </html>

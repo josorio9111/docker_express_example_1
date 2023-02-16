@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+</head>
+<body class="container">
+    <div class="row mt-5">
+        <div class="col-sm-6">
+            <h3>Enviar mensaje</h3>
+            <hr/>
+            <input type="text" id="txtUI" class="form-control mb-2" placeholder="uuid" autocomplete="false"/>
+            <input type="text" id="txtMensaje" class="form-control mb-2" placeholder="Mensaje" autocomplete="false"/>
+            <h3>Usuarios Activos</h3><hr/>
+            <ul id="ulUsuarios"></ul>
+
+        </div>
+        <div class="col-sm-6">
+            <h3>Chat Completo</h3><hr/>
+            <ul id="ulMensajes"></ul>
+        </div>
+    </div>
+    <button class="btn btn-outline-danger" id="btn-salir">Logout</button>
+
+    <script src="./socket.io/socket.io.js"></script>
+    <script src="./js/selector.js"></script>
+    <script src="./js/chat.js"></script>
+</body>
+</html>
